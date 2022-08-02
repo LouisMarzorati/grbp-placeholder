@@ -26,7 +26,6 @@ export default function LoginModal({ altLayout = false }) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(async (r) => {
-        console.dir(r)
         await handleUser(user)
         setLoading(false)
       })
@@ -52,9 +51,6 @@ export default function LoginModal({ altLayout = false }) {
     return {
       id: user.id,
       email: user.email,
-      name: `${user.first_name} ${user.last_name}`,
-      first_name: user?.first_name,
-      last_name: user?.last_name,
     }
   }
 
@@ -69,7 +65,6 @@ export default function LoginModal({ altLayout = false }) {
         result = await auth.signInWithEmailAndPassword(email, password)
       }
 
-      console.dir(result)
       if (result) {
         closeModal()
         toast.success('Howdy!')

@@ -1,12 +1,12 @@
-import '@/styles/globals.css'
-import { UserContext } from '@/lib/user-context'
-import { useUser } from '@/lib/useUser'
-import Loader from '@/components/elements/Loader'
-import Layout from '@/components/Layout'
-import Header from '@/components/Header'
+import 'styles/globals.css'
+import { UserContext } from 'lib/user-context'
+import { useUser } from 'lib/useUser'
+import Loader from 'components/elements/Loader'
+import Layout from 'components/Layout'
+import Header from 'components/Header'
+import UsernameForm from 'components/UsernameForm'
 function MyApp({ Component, pageProps }) {
   const userData = useUser()
-  console.dir(userData)
   if (userData.userLoading) {
     return (
       <div className='fixed z-40 top-0 left-0 w-full h-full flex justify-center items-center'>
@@ -20,11 +20,26 @@ function MyApp({ Component, pageProps }) {
     )
   }
 
+  if (!userData?.user?.uid) {
+    return (
+      <>
+        <Header title='GRBP' />
+        <Layout isLoggedIn={false}>
+          <div className=''>Gotta Login</div>
+        </Layout>
+      </>
+    )
+  }
+
   return (
     <UserContext.Provider value={userData}>
       <Header title='GRBP' />
       <Layout isLoggedIn={userData.user?.uid}>
-        <Component {...pageProps} />
+        {!userData?.user?.username ? (
+          <UsernameForm email={userData?.user?.email} />
+        ) : (
+          <Component {...pageProps} />
+        )}
       </Layout>
     </UserContext.Provider>
   )
