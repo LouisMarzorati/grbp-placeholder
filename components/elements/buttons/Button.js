@@ -18,7 +18,7 @@ export default function Button({ children, ...props }) {
       //     setBg('bg-mainTeal hover:bg-shadowTeal text-white')
       //     break
       case 'danger':
-        setBg('bg-warning hover:bg-error text-white')
+        setBg('bg-error hover:bg-errorHover text-white')
         break
       default:
         setBg('bg-primary hover:bg-primaryHover text-white')
@@ -27,7 +27,7 @@ export default function Button({ children, ...props }) {
   }, [color])
   return (
     <button
-      className={`${className} ${bg} h-[50px] text-lg rounded-[10px] hover:transition-colors py-2 px-7 mx-2 font-semibold flex items-center text-center justify-center disabled:bg-ghost`}
+      className={`${className} ${bg} h-[40px] text-lg rounded-[10px] hover:transition-colors py-2 px-7 mx-2 font-semibold flex items-center text-center justify-center disabled:bg-ghost`}
       {...rest}
     >
       {src && (

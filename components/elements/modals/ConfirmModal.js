@@ -27,6 +27,11 @@ export default function ConfirmModal({
           {confirmButtonText}
         </Button>
       )}
+      {hideButton && (
+        <div disabled={loading} onClick={openModal} className='cursor-pointer'>
+          X
+        </div>
+      )}
 
       <ModalElement
         title={title}
