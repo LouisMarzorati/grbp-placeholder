@@ -41,13 +41,13 @@ export default function Home() {
     return <Loader />
   }
 
-  if (userError) {
-    return <div>User not found lol</div>
+  if (userError || (!user?.userLoading && !user?.uid)) {
+    return <div>Login to view</div>
   }
 
   return (
     <div className='flex flex-col gap-y-6 w-full'>
-      <div className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-center items-center gap-y-4'>
         <CreatePost />
         {posts?.length > 0 &&
           posts.map((post) => <Post post={post} key={post.id} />)}

@@ -17,6 +17,7 @@ export default function Post({ post }) {
   const handleUpdatePost = async () => {
     await updatePost(post.id, editContent)
     setEditing(false)
+    toast.success('McUpdated')
   }
 
   const handleDeletePost = async () => {

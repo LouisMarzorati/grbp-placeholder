@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Toaster } from 'react-hot-toast'
 import LoginModal from '@/components/elements/modals/LoginModal'
 import { signOut } from '@/lib/firebase'
-
+import Link from 'next/link'
 export default function Layout({ children, isLoggedIn }) {
   const router = useRouter()
 
@@ -16,9 +16,14 @@ export default function Layout({ children, isLoggedIn }) {
       <Nav>
         <div className='flex'>
           {isLoggedIn ? (
-            <Button className='h-[50px]' onClick={handleLogout}>
-              Logout
-            </Button>
+            <div className='flex gap-x-4'>
+              <Link href='/profile'>
+                <Button>Profile</Button>
+              </Link>
+              <Button color='danger' onClick={handleLogout}>
+                Logout
+              </Button>
+            </div>
           ) : (
             <LoginModal />
           )}

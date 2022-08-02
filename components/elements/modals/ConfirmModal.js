@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ModalElement from './Modal'
 import Button from '@/components/elements/buttons/Button'
-
+import Image from 'next/image'
 export default function ConfirmModal({
   hideButton,
   title = 'Warning',
@@ -28,8 +28,12 @@ export default function ConfirmModal({
         </Button>
       )}
       {hideButton && (
-        <div disabled={loading} onClick={openModal} className='cursor-pointer'>
-          X
+        <div
+          disabled={loading}
+          onClick={openModal}
+          className='cursor-pointer hover:opacity-50'
+        >
+          <Image src='/x.svg' width={17} height={17} />
         </div>
       )}
 

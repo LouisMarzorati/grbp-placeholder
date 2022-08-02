@@ -91,9 +91,8 @@ export default function LoginModal({ altLayout = false }) {
         modalIsOpen={modalIsOpen}
         closeModal={closeModal}
         hasBorder={false}
-        small
       >
-        <div className='flex flex-col w-full gap-y-7 p-4'>
+        <div className='flex flex-col w-full gap-y-7 p-2'>
           <div className='flex flex-col h-full justify-center align-middle w-full'>
             <div className='mb-8'>
               <div className='text-center text-4xl text-offBlack'>
@@ -101,7 +100,7 @@ export default function LoginModal({ altLayout = false }) {
               </div>
             </div>
             <div className='flex flex-col items-center justify-center w-full'>
-              <div className='w-1/2'>
+              <div className='w-full'>
                 <form
                   className='w-full flex flex-col gap-3'
                   onSubmit={handleSubmit}

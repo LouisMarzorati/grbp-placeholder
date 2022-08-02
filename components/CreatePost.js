@@ -18,7 +18,9 @@ export default function CreatePost() {
 
   return (
     <div className='max-w-[500px] w-full p-2 border-[1px] border-primary min-h-[250px] rounded-md flex flex-col justify-between'>
-      <div className='flex border-b-2 border-primary py-2'>{user?.uid}</div>
+      <div className='flex border-b-2 border-primary py-2'>
+        {user?.username ?? user?.uid}
+      </div>
       <div className='flex h-full overflow-y-clip'>
         <textarea
           className='w-full h-full outline-none p-2 resize-none'
