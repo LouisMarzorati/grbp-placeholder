@@ -29,17 +29,19 @@ export default function Post({ post }) {
     <div className='max-w-[500px] w-full p-2 border-[1px] border-primary min-h-[250px] rounded-md flex flex-col justify-between'>
       <div className='flex border-b-2 border-primary py-2 justify-between'>
         {post?.username}
-        <div className='mr-4'>
-          <ConfirmModal
-            title='Warning'
-            confirmMessage={`Are you sure you want to delete this post?`}
-            confirmButtonText='Delete'
-            hideButton={true}
-            handleConfirm={() => {
-              handleDeletePost()
-            }}
-          />
-        </div>
+        {user?.uid === post?.owner && (
+          <div className='mr-4'>
+            <ConfirmModal
+              title='Warning'
+              confirmMessage={`Are you sure you want to delete this post?`}
+              confirmButtonText='Delete'
+              hideButton={true}
+              handleConfirm={() => {
+                handleDeletePost()
+              }}
+            />
+          </div>
+        )}
       </div>
       <div className='flex h-full overflow-y-clip'>
         {!editing && (

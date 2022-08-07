@@ -4,16 +4,16 @@ import { useState, useContext, useEffect, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 import Input from './elements/Input'
 import Button from './elements/buttons/Button'
-export default function UsernameForm({ email }) {
+import toast from 'react-hot-toast'
+import { updateUsername } from 'lib/db'
+export default function UsernameForm({ changing }) {
   const [formValue, setFormValue] = useState('')
   const [isValid, setIsValid] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const { user, username } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-
+  const onSubmit = async () => {
     const userDoc = firestore.doc(`users/${user.uid}`)
     const usernameDoc = firestore.doc(`usernames/${formValue}`)
 
@@ -26,6 +26,14 @@ export default function UsernameForm({ email }) {
     batch.set(usernameDoc, { uid: user.uid })
 
     await batch.commit()
+  }
+
+  const handleChange = async () => {
+    const result = await updateUsername(user.uid, formValue, user.username)
+    if (result) {
+      toast.success('Username changed successfully')
+    }
+    return result
   }
 
   const onChange = (e) => {
@@ -65,27 +73,36 @@ export default function UsernameForm({ email }) {
   )
 
   return (
-    !username && (
-      <div className='flex flex-col gap-y-4'>
-        <span className='text-2xl font-semibold'>Choose Username</span>
-        <form onSubmit={onSubmit}>
-          <Input
-            name='username'
-            placeholder='cool_guy_69'
-            value={formValue}
-            onChange={onChange}
-          />
-          <UsernameMessage
-            username={formValue}
-            isValid={isValid}
-            loading={loading}
-          />
-          <Button type='submit' className='btn-green' disabled={!isValid}>
-            Choose
-          </Button>
-        </form>
-      </div>
-    )
+    <div className='flex flex-col gap-y-4'>
+      <span className='text-2xl font-semibold'>
+        {changing ? 'Change Username' : 'Choose Username'}
+      </span>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (changing) {
+            handleChange()
+            return
+          }
+          onSubmit()
+        }}
+      >
+        <Input
+          name='username'
+          placeholder='cool_guy_69'
+          value={formValue}
+          onChange={onChange}
+        />
+        <UsernameMessage
+          username={formValue}
+          isValid={isValid}
+          loading={loading}
+        />
+        <Button type='submit' className='btn-green' disabled={!isValid}>
+          {changing ? 'Change' : 'Choose'}
+        </Button>
+      </form>
+    </div>
   )
 }
 

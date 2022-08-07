@@ -9,12 +9,8 @@ let customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: '#fff',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
     outline: 'none',
     padding: '20px 3rem 10px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
     overflow: 'auto',
     minWidth: '500px',
     maxWidth: '1200px',
@@ -47,12 +43,9 @@ export default function ModalElement({
         <div
           className={`flex mb-7 pb-3 justify-between ${
             hasBorder && 'border-b-[1px]'
-          } border-ghost h-full`}
+          } border-primary h-full`}
         >
           <div className='font-semibold text-lg'>{title}</div>
-          <div onClick={closeModal} className='cursor-pointer hover:opacity-50'>
-            <Image src='/x.svg' width={17} height={17} />
-          </div>
         </div>
         <div className='flex flex-col'>{children}</div>
       </Modal>

@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
       <Header title='GRBP' />
       <Layout isLoggedIn={userData.user?.uid}>
         {!userData?.user?.username ? (
-          <UsernameForm email={userData?.user?.email} />
+          <UsernameForm />
         ) : (
           <Component {...pageProps} />
         )}
