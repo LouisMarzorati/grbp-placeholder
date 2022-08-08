@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ModalElement from './Modal'
+import ModalElement from './ModalElement'
 import Button from '@/components/elements/buttons/Button'
 import Image from 'next/image'
 export default function ConfirmModal({

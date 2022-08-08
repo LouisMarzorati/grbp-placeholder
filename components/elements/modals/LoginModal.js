@@ -3,7 +3,7 @@ import LoadingButton from '@/components/elements/buttons/LoadingButton'
 import Input from '@/components/elements/Input'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import ModalElement from './Modal'
+import ModalElement from './ModalElement'
 import { auth, googleAuthProvider, twitterAuthProvider } from '@/lib/firebase'
 
 export default function LoginModal({ altLayout = false }) {
@@ -83,7 +83,7 @@ export default function LoginModal({ altLayout = false }) {
 
       <ModalElement
         modalIsOpen={modalIsOpen}
-        closeModal={closeModal}
+        handleClose={closeModal}
         hasBorder={false}
       >
         <div className='flex flex-col w-full gap-y-7 p-2'>
