@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import LoginModal from '@/components/elements/modals/LoginModal'
 import { signOut } from '@/lib/firebase'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 export default function Layout({ children, isLoggedIn }) {
   const router = useRouter()
 
@@ -18,10 +19,10 @@ export default function Layout({ children, isLoggedIn }) {
           {isLoggedIn ? (
             <div className='flex gap-x-4'>
               <Link href='/profile'>
-                <Button>Profile</Button>
+                <Button>profile</Button>
               </Link>
               <Button color='danger' onClick={handleLogout}>
-                Logout
+                logout
               </Button>
             </div>
           ) : (
@@ -62,7 +63,14 @@ export default function Layout({ children, isLoggedIn }) {
           }}
           position='bottom-center'
         />
-        <div className='w-full p-8 flex justify-center'>{children}</div>
+        <motion.div
+          className='w-full p-8 flex justify-center'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          key={router.route}
+        >
+          {children}
+        </motion.div>
       </div>
     </div>
   )

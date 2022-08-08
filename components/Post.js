@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-
 import { UserContext } from 'lib/user-context'
 import Button from './elements/buttons/Button'
 import { updatePost, deletePost } from 'lib/db'
@@ -39,7 +38,7 @@ export default function Post({ post }) {
                     setEditing(true)
                   }}
                 >
-                  Edit
+                  edit
                 </Button>
               )}
               {editing && (
@@ -52,7 +51,7 @@ export default function Post({ post }) {
                       setEditContent(post.content)
                     }}
                   >
-                    Cancel
+                    cancel
                   </Button>
                   <Button
                     className='w-full max-w-[100px] h-full bg-primary text-white'
@@ -61,7 +60,7 @@ export default function Post({ post }) {
                       handleUpdatePost(post.id)
                     }}
                   >
-                    Update
+                    update
                   </Button>
                 </div>
               )}
@@ -90,6 +89,7 @@ export default function Post({ post }) {
           <textarea
             className='w-full h-full outline-none p-2 resize-none'
             value={editContent}
+            autoFocus
             onChange={(e) => setEditContent(e.target.value)}
           />
         )}

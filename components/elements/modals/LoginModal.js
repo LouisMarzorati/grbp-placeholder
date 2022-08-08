@@ -82,7 +82,6 @@ export default function LoginModal({ altLayout = false }) {
       </Button>
 
       <ModalElement
-        title='Sign In'
         modalIsOpen={modalIsOpen}
         closeModal={closeModal}
         hasBorder={false}
@@ -110,12 +109,13 @@ function GoogleSignInButton() {
   }
 
   return (
-    <>
-      <button className='flex gap-x-4' onClick={signInWithGoogle}>
-        <img src={'/google.png'} width='30px' />
-        <span className='text-lg'>Sign in with Google</span>
-      </button>
-    </>
+    <button
+      className='flex gap-x-4 p-4 hover:bg-slate-100 text-2xl rounded-md '
+      onClick={signInWithGoogle}
+    >
+      <img src={'/google.png'} width='30px' />
+      <span>Sign in with Google</span>
+    </button>
   )
 }
 
@@ -125,11 +125,12 @@ function TwitterSignInButton() {
   }
 
   return (
-    <>
-      <button className='flex gap-x-4' onClick={signInWithTwitter}>
-        <img src={'/twitter.png'} width='30px' />
-        <span className='text-lg'>Sign in with Twitter</span>
-      </button>
-    </>
+    <button
+      className='flex gap-x-4 p-4 hover:bg-slate-100 text-2xl rounded-md '
+      onClick={signInWithTwitter}
+    >
+      <img src={'/twitter.png'} width='30px' />
+      <span>Sign in with Twitter</span>
+    </button>
   )
 }

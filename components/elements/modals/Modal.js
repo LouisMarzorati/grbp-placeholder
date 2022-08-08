@@ -1,6 +1,5 @@
-import Image from 'next/image'
 import Modal from 'react-modal'
-
+import { motion, AnimatePresence } from 'framer-motion'
 let customStyles = {
   content: {
     top: '50%',
@@ -10,11 +9,8 @@ let customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     outline: 'none',
-    padding: '20px 3rem 10px',
     overflow: 'auto',
-    minWidth: '500px',
     maxWidth: '1200px',
-    minHeight: '250px',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -27,10 +23,9 @@ export default function ModalElement({
   modalIsOpen,
   closeModal,
   children,
-  hasBorder = true,
 }) {
   return (
-    <div className='flex-col'>
+    <AnimatePresence>
       <Modal
         id='modal'
         name='modal'
@@ -40,15 +35,15 @@ export default function ModalElement({
         contentLabel='Example Modal'
         ariaHideApp={false}
       >
-        <div
-          className={`flex mb-7 pb-3 justify-between ${
-            hasBorder && 'border-b-[1px]'
-          } border-primary h-full`}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <div className='font-semibold text-lg'>{title}</div>
-        </div>
-        <div className='flex flex-col'>{children}</div>
+          {title && <div className='font-semibold text-lg'>{title}</div>}
+          <div className='flex flex-col'>{children}</div>
+        </motion.div>
       </Modal>
-    </div>
+    </AnimatePresence>
   )
 }
