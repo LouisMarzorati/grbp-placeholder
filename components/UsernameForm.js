@@ -87,11 +87,28 @@ export default function UsernameForm({ changing }) {
           onSubmit()
         }}
       >
+        {changing ? (
+          <img
+            src={`https://avatars.dicebear.com/api/adventurer/${
+              formValue?.trim()?.length > 0 ? formValue : user.username
+            }.svg`}
+            className='w-34 h-34 rounded-full'
+          />
+        ) : (
+          <img
+            src={`https://avatars.dicebear.com/api/adventurer/${
+              formValue?.trim()?.length > 0 ? formValue : 'POOPS LETTER'
+            }.svg`}
+            className='w-25 h-25 rounded-full'
+          />
+        )}
+
         <Input
           name='username'
           placeholder='cool_guy_69'
           value={formValue}
           onChange={onChange}
+          className='mb-4'
         />
         <UsernameMessage
           username={formValue}
