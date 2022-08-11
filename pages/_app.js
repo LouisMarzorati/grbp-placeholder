@@ -36,7 +36,9 @@ function MyApp({ Component, pageProps }) {
       <Header title='GRBP' />
       <Layout isLoggedIn={userData.user?.uid}>
         {!userData?.user?.username ? (
-          <UsernameForm />
+          <div className='flex flex-col gap-y-4 w-full max-w-[500px]'>
+            <UsernameForm />
+          </div>
         ) : (
           <Component {...pageProps} />
         )}

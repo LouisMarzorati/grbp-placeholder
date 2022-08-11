@@ -73,11 +73,9 @@ export default function UsernameForm({ changing }) {
   )
 
   return (
-    <div className='flex flex-col gap-y-4'>
-      <span className='text-2xl font-semibold'>
-        {changing ? 'Change Username' : 'Choose Username'}
-      </span>
+    <div className='flex flex-col gap-y-4 items-center justify-center w-full max-w-[500px]'>
       <form
+        className='w-full'
         onSubmit={(e) => {
           e.preventDefault()
           if (changing) {
@@ -102,7 +100,9 @@ export default function UsernameForm({ changing }) {
             className='w-25 h-25 rounded-full'
           />
         )}
-
+        <span className='text-2xl font-semibold'>
+          {changing ? 'Change Username' : 'Choose Username'}
+        </span>
         <Input
           name='username'
           placeholder='cool_guy_69'

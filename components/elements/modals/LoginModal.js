@@ -5,6 +5,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import ModalElement from './ModalElement'
 import { auth, googleAuthProvider, twitterAuthProvider } from '@/lib/firebase'
+import { facebookAuthProvider } from 'lib/firebase'
 
 export default function LoginModal({ altLayout = false }) {
   const [modalIsOpen, setIsOpen] = useState(false)
@@ -93,6 +94,7 @@ export default function LoginModal({ altLayout = false }) {
                 <div className='flex flex-col gap-y-6 justify-center items-center'>
                   {GoogleSignInButton()}
                   {TwitterSignInButton()}
+                  {FacebookSignInButton()}
                 </div>
               </div>
             </div>
@@ -105,7 +107,17 @@ export default function LoginModal({ altLayout = false }) {
 
 function GoogleSignInButton() {
   const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider)
+    try {
+      await auth.signInWithPopup(googleAuthProvider)
+    } catch (error) {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        toast.error('An account with this email already exists.')
+      } else {
+        toast.error(
+          'An error occured while signing in. Please try again later.'
+        )
+      }
+    }
   }
 
   return (
@@ -121,7 +133,17 @@ function GoogleSignInButton() {
 
 function TwitterSignInButton() {
   const signInWithTwitter = async () => {
-    await auth.signInWithPopup(twitterAuthProvider)
+    try {
+      await auth.signInWithPopup(twitterAuthProvider)
+    } catch (error) {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        toast.error('An account with this email already exists.')
+      } else {
+        toast.error(
+          'An error occured while signing in. Please try again later.'
+        )
+      }
+    }
   }
 
   return (
@@ -131,6 +153,31 @@ function TwitterSignInButton() {
     >
       <img src={'/twitter.png'} width='30px' />
       <span>Sign in with Twitter</span>
+    </button>
+  )
+}
+function FacebookSignInButton() {
+  const signInWithFacebook = async () => {
+    try {
+      await auth.signInWithPopup(facebookAuthProvider)
+    } catch (error) {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        toast.error('An account with this email already exists.')
+      } else {
+        toast.error(
+          'An error occured while signing in. Please try again later.'
+        )
+      }
+    }
+  }
+
+  return (
+    <button
+      className='flex gap-x-4 p-4 hover:bg-slate-100 text-2xl rounded-md '
+      onClick={signInWithFacebook}
+    >
+      <img src={'/facebook.png'} width='30px' />
+      <span>Sign in with Facebook</span>
     </button>
   )
 }
