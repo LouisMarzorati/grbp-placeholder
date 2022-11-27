@@ -4,7 +4,7 @@ import convertFirebaseTime from 'utils/convertTime'
 export default function ContentLabel({ username, contentDate, small = false }) {
   if (small) {
     return (
-      <div className='flex items-center gap-x-4 w-[100px]'>
+      <div className='flex items-center gap-x-4 w-full max-w-[200px]'>
         <img
           src={`https://avatars.dicebear.com/api/adventurer/${username}.svg`}
           alt={username}

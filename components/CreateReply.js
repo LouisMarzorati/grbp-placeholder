@@ -25,7 +25,7 @@ export default function CreateReply({ postId, parentId = null }) {
   if (!show) {
     return (
       <span
-        className='cursor-pointer text-primary hover:text-primaryHover'
+        className='cursor-pointer text-primary hover:text-primaryHover font-semibold w-fit'
         onClick={() => {
           setShow(!show)
         }}

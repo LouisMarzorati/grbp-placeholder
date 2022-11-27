@@ -46,7 +46,7 @@ export default function CreatePost() {
               post
             </Button>
             <Button
-              className='w-full max-w-[25px] h-full bg-primary text-white'
+              className='w-full max-w-[25px] h-full text-white'
               color='danger'
               onClick={() => setPosting(false)}
             >

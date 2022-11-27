@@ -33,7 +33,7 @@ export default function ConfirmModal({
           onClick={openModal}
           className='cursor-pointer hover:opacity-50'
         >
-          <Image src='/x.svg' width={17} height={17} />
+          ❌
         </div>
       )}
 

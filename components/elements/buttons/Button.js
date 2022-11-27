@@ -5,18 +5,6 @@ export default function Button({ children, ...props }) {
   const [bg, setBg] = useState('')
   useEffect(() => {
     switch (color) {
-      //   case 'ghost':
-      //     setBg('bg-ghost hover:bg-offGray text-white')
-      //     break
-      //   case 'gray':
-      //     setBg('bg-offGray hover:bg-offBlack text-white')
-      //     break
-      //   case 'white':
-      //     setBg('bg-white hover:bg-backdrop text-offBlack')
-      //     break
-      //   case 'teal':
-      //     setBg('bg-mainTeal hover:bg-shadowTeal text-white')
-      //     break
       case 'danger':
         setBg('bg-error hover:bg-errorHover text-white')
         break

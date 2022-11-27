@@ -69,8 +69,8 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
 
   if (isReply) {
     return (
-      <div className='ml-6 max-w-[450px] w-full p-2 border-t-[1px] border-l-[1px] border-primary min-h-[250px] flex flex-col justify-between'>
-        <div className='flex border-b-2 border-primary py-2 justify-between'>
+      <div className='ml-6 max-w-[450px] w-full p-2 flex flex-col justify-between bg-slate-200 my-2 rounded-lg'>
+        <div className='flex border-b-2 py-2 justify-between'>
           <ContentLabel
             username={post?.username}
             contentDate={post?.createdAt}
@@ -80,19 +80,19 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
             <div className='flex items-center gap-x-6'>
               <div>
                 {!editing && user?.uid === post?.owner && (
-                  <Button
-                    className='w-full max-w-[100px] h-full bg-primary text-white'
+                  <span
+                    className='w-full max-w-[100px] h-full p-2 cursor-pointer'
                     onClick={() => {
                       setEditing(true)
                     }}
                   >
                     edit
-                  </Button>
+                  </span>
                 )}
                 {editing && (
                   <div className='flex gap-x-4'>
-                    <Button
-                      className='w-full max-w-[100px] h-full bg-primary text-white'
+                    <span
+                      className='w-full max-w-[100px] h-full p-2 cursor-pointer'
                       color='danger'
                       onClick={() => {
                         setEditing(false)
@@ -100,16 +100,16 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
                       }}
                     >
                       cancel
-                    </Button>
-                    <Button
-                      className='w-full max-w-[100px] h-full bg-primary text-white'
+                    </span>
+                    <span
+                      className='w-full max-w-[100px] h-full p-2 cursor-pointer'
                       onClick={() => {
                         setEditContent(post.content)
                         handleUpdatePost(post.id)
                       }}
                     >
                       update
-                    </Button>
+                    </span>
                   </div>
                 )}
               </div>
@@ -128,14 +128,14 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
         <div className='flex h-full overflow-y-clip flex-col'>
           {!editing && (
             <textarea
-              className='w-full h-full outline-none p-2 resize-none cursor-default'
+              className='w-full h-fit outline-none p-2 resize-none cursor-default bg-slate-200'
               readOnly
               value={post?.content}
             />
           )}
           {editing && (
             <textarea
-              className='w-full h-full outline-none p-2 resize-none'
+              className='w-full h-fit outline-none p-2 resize-none'
               value={editContent}
               autoFocus
               onChange={(e) => setEditContent(e.target.value)}
@@ -155,7 +155,6 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
               ))}
             </div>
           )}
-          <CreateReply postId={originalPostId} parentId={post.id} />
         </div>
       </div>
     )
@@ -243,7 +242,7 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
             ))}
           </div>
         )}
-        <CreateReply postId={post?.id} />
+        {!isReply && <CreateReply postId={post?.id} />}
       </div>
     </div>
   )
