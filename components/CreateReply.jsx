@@ -13,7 +13,8 @@ export default function CreateReply({ postId, parentId = null }) {
       user.uid,
       postId,
       reply,
-      parentId
+      parentId,
+      user?.photoURL ?? null
     )
     if (result) {
       setShow(false)

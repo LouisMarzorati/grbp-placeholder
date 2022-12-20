@@ -17,9 +17,14 @@ export default function Layout({ children, isLoggedIn }) {
       <Nav>
         <div className='flex'>
           {isLoggedIn ? (
-            <div className='flex gap-x-4'>
+            <div className='flex items-center gap-x-4'>
+              <Link href='/balls'>
+                <div className='cursor-pointer'>
+                  No polo? play with our balls
+                </div>
+              </Link>
               <Link href='/profile'>
-                <Button>profile</Button>
+                <div className='cursor-pointer'>profile</div>
               </Link>
               <Button color='danger' onClick={handleLogout}>
                 logout
@@ -31,7 +36,7 @@ export default function Layout({ children, isLoggedIn }) {
         </div>
       </Nav>
 
-      <div className='flex w-full overflow-hidden bg-white'>
+      <div className='flex w-full overflow-hidden'>
         <Toaster
           toastOptions={{
             autoClose: 5000,

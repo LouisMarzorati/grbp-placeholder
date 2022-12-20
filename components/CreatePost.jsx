@@ -14,8 +14,14 @@ export default function CreatePost() {
   }
 
   const handleCreatePost = async () => {
-    await createPost(user.uid, user.username ?? 'No user name', content)
+    await createPost(
+      user.uid,
+      user.username ?? 'No user name',
+      content,
+      user?.photoURL ?? null
+    )
     setContent('')
+    setPosting(false)
   }
 
   return (
@@ -27,7 +33,7 @@ export default function CreatePost() {
           className='max-w-[500px] w-full p-2 border-[1px] border-primary min-h-[250px] rounded-md flex flex-col justify-between'
         >
           <div className='flex border-b-2 border-primary py-2'>
-            <ContentLabel username={user.username} />
+            <ContentLabel username={user.username} photoURL={user?.photoURL} />
           </div>
           <div className='flex h-full overflow-y-clip'>
             <textarea

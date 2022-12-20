@@ -5,6 +5,7 @@ import Loader from 'components/elements/Loader'
 import Layout from 'components/Layout'
 import Header from 'components/Header'
 import UsernameForm from 'components/UsernameForm'
+import LandingPage from 'components/LandingPage'
 function MyApp({ Component, pageProps }) {
   const userData = useUser()
   if (userData.userLoading) {
@@ -25,7 +26,7 @@ function MyApp({ Component, pageProps }) {
       <>
         <Header title='GRBP' />
         <Layout isLoggedIn={false}>
-          <div className=''>Gotta Login</div>
+          <LandingPage />
         </Layout>
       </>
     )

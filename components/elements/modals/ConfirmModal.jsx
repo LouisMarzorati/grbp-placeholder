@@ -43,10 +43,10 @@ export default function ConfirmModal({
         closeModal={closeModal}
         small
       >
-        <div className='flex flex-col w-full h-44 gap-y-7'>
+        <div className='flex flex-col w-full h-22 gap-y-7 items-center p-6'>
           <div className='flex w-full text-lg'>{confirmMessage}</div>
           <div className='flex'>
-            <Button onClick={closeModal} color='gray' className='ml-0'>
+            <Button onClick={closeModal} color='danger' className='ml-0'>
               Cancel
             </Button>
             <Button

@@ -5,9 +5,9 @@ export default function Nav({ children, className }) {
     <div
       className={`${
         className ?? ''
-      } flex items-center justify-between flex-wrap bg-white p-6 border-b-2`}
+      } flex items-center justify-between flex-wrap  p-6 border-b-2`}
     >
-      <div className='flex items-center flex-shrink-0 text-black mr-6'>
+      <div className='flex items-center flex-shrink-0  mr-6'>
         <Link href='/'>
           <div className='text-2xl font-semibold cursor-pointer'>GRBP</div>
         </Link>

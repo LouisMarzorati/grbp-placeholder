@@ -13,6 +13,16 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: #2b2828;
+  }
+}
 :root {
   --PhoneInput-color--focus: #71e39e;
   --PhoneInputInternationalIconPhone-opacity: 0.8;

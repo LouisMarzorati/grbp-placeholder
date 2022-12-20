@@ -1,17 +1,27 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from 'lib/user-context'
 import Button from './elements/buttons/Button'
-import { updatePost, deletePost } from 'lib/db'
+import { updatePost, deletePost, updateReply, deleteReply } from 'lib/db'
 import ConfirmModal from './elements/modals/ConfirmModal'
 import toast from 'react-hot-toast'
 import ContentLabel from './ContentLabel'
 import CreateReply from './CreateReply'
 import { firestore } from 'lib/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
+import HeartButton from './HeartButton'
 export default function Post({ post, originalPostId = null, isReply = false }) {
   const { user } = useContext(UserContext)
   const [editing, setEditing] = useState(false)
   const [editContent, setEditContent] = useState(post.content ?? '')
+
+  const postRef = isReply
+    ? firestore
+        .collection('posts')
+        .doc(originalPostId)
+        .collection('replies')
+        .doc(post.id)
+    : firestore.collection('posts').doc(post.id)
+
   const ref = firestore
     .collection('posts')
     .doc(post.id)
@@ -26,12 +36,19 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
   const handleUpdatePost = async () => {
     await updatePost(post.id, editContent)
     setEditing(false)
-    toast.success('McUpdated')
+  }
+
+  const handleUpdateReply = async (id) => {
+    await updateReply(originalPostId, id, editContent)
+    setEditing(false)
   }
 
   const handleDeletePost = async () => {
     await deletePost(post.id)
-    toast.success('She gone')
+  }
+
+  const handleDeleteReply = async () => {
+    await deleteReply(originalPostId, post.id)
   }
 
   useEffect(() => {
@@ -69,12 +86,13 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
 
   if (isReply) {
     return (
-      <div className='ml-6 max-w-[450px] w-full p-2 flex flex-col justify-between bg-slate-200 my-2 rounded-lg'>
+      <div className='ml-6 max-w-[450px] w-full p-2 flex flex-col justify-between bg-[#577861] my-2 rounded-lg'>
         <div className='flex border-b-2 py-2 justify-between'>
           <ContentLabel
             username={post?.username}
             contentDate={post?.createdAt}
             small={true}
+            photoURL={post?.photoURL}
           />
           {user?.uid === post?.owner && (
             <div className='flex items-center gap-x-6'>
@@ -105,7 +123,7 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
                       className='w-full max-w-[100px] h-full p-2 cursor-pointer'
                       onClick={() => {
                         setEditContent(post.content)
-                        handleUpdatePost(post.id)
+                        handleUpdateReply(post.id)
                       }}
                     >
                       update
@@ -119,7 +137,7 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
                 confirmButtonText='Delete'
                 hideButton={true}
                 handleConfirm={() => {
-                  handleDeletePost()
+                  handleDeleteReply()
                 }}
               />
             </div>
@@ -128,7 +146,7 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
         <div className='flex h-full overflow-y-clip flex-col'>
           {!editing && (
             <textarea
-              className='w-full h-fit outline-none p-2 resize-none cursor-default bg-slate-200'
+              className='w-full h-fit outline-none p-2 resize-none cursor-default'
               readOnly
               value={post?.content}
             />
@@ -163,7 +181,11 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
   return (
     <div className='max-w-[500px] w-full p-2 border-[1px] border-primary min-h-[250px] rounded-md flex flex-col justify-between'>
       <div className='flex border-b-2 border-primary py-2 justify-between'>
-        <ContentLabel username={post?.username} contentDate={post?.createdAt} />
+        <ContentLabel
+          username={post?.username}
+          contentDate={post?.createdAt}
+          photoURL={post?.photoURL}
+        />
         {user?.uid === post?.owner && (
           <div className='flex items-center gap-x-6'>
             <div>
@@ -242,6 +264,8 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
             ))}
           </div>
         )}
+
+        <HeartButton postRef={postRef} userId={user?.uid} />
         {!isReply && <CreateReply postId={post?.id} />}
       </div>
     </div>
