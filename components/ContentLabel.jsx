@@ -17,7 +17,7 @@ export default function ContentLabel({
               : `https://avatars.dicebear.com/api/adventurer/${username}.svg`
           }
           alt={username}
-          className='w-8 h-8 rounded-full'
+          className='w-8 h-8 rounded-full object-cover'
         />
 
         <div>
@@ -40,7 +40,7 @@ export default function ContentLabel({
             : `https://avatars.dicebear.com/api/adventurer/${username}.svg`
         }
         alt={username}
-        className='w-16 h-16 rounded-full'
+        className='w-16 h-16 rounded-full object-cover'
       />
 
       <div>

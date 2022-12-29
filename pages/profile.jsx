@@ -7,6 +7,9 @@ import UsernameForm from 'components/UsernameForm'
 import { toast } from 'react-hot-toast'
 import { isPossiblePhoneNumber } from 'react-phone-number-input'
 import Image from 'next/image'
+import { signOut } from '@/lib/firebase'
+import Link from 'next/link'
+
 export default function ProfilePage() {
   const { user } = useContext(UserContext)
   const [changingUsername, setChangingUsername] = useState(false)
@@ -26,9 +29,21 @@ export default function ProfilePage() {
     const result = await uploadProfilePicture(user.uid, file)
     console.log(result)
   }
+  const handleLogout = () => {
+    signOut()
+  }
 
   return (
     <div className='flex flex-col gap-y-4'>
+      <Button color='danger' onClick={handleLogout}>
+        logout
+      </Button>
+
+      <Link href='/balls'>
+        <div className='cursor-pointer text-2xl'>
+          No polo? play with our balls
+        </div>
+      </Link>
       <div>Email: {user?.email}</div>
       <div>Username: {user?.username}</div>
       <div>Phone: {user?.phone}</div>
@@ -39,7 +54,12 @@ export default function ProfilePage() {
       <div className='flex flex-col gap-y-2'>
         <div className='w-[200px] h-auto'>
           {user?.photoURL && (
-            <Image src={user?.photoURL} width='200' height='200' />
+            <Image
+              src={user?.photoURL}
+              width='200'
+              height='200'
+              className='object-cover'
+            />
           )}
         </div>
         <input

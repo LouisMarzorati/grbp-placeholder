@@ -1,40 +1,13 @@
-import Button from '@/components/elements/buttons/Button'
 import Nav from '@/components/Nav'
 import { useRouter } from 'next/router'
 import { Toaster } from 'react-hot-toast'
-import LoginModal from '@/components/elements/modals/LoginModal'
-import { signOut } from '@/lib/firebase'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 export default function Layout({ children, isLoggedIn }) {
   const router = useRouter()
 
-  const handleLogout = () => {
-    signOut()
-  }
   return (
     <div>
-      <Nav>
-        <div className='flex'>
-          {isLoggedIn ? (
-            <div className='flex items-center gap-x-4'>
-              <Link href='/balls'>
-                <div className='cursor-pointer'>
-                  No polo? play with our balls
-                </div>
-              </Link>
-              <Link href='/profile'>
-                <div className='cursor-pointer'>profile</div>
-              </Link>
-              <Button color='danger' onClick={handleLogout}>
-                logout
-              </Button>
-            </div>
-          ) : (
-            <LoginModal />
-          )}
-        </div>
-      </Nav>
+      <Nav isLoggedIn={isLoggedIn} />
 
       <div className='flex w-full overflow-hidden'>
         <Toaster
