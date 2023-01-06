@@ -1,34 +1,35 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from 'lib/user-context'
 import Button from './elements/buttons/Button'
-import { updatePost, deletePost, updateReply, deleteReply } from 'lib/db'
+import {
+  updatePost,
+  deletePost,
+  updateReply,
+  deleteReply,
+  updateComment,
+} from 'lib/db'
 import ConfirmModal from './elements/modals/ConfirmModal'
 import toast from 'react-hot-toast'
 import ContentLabel from './ContentLabel'
 import CreateReply from './CreateReply'
 import { firestore } from 'lib/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
-import HeartButton from './HeartButton'
+
 export default function Post({ post, originalPostId = null, isReply = false }) {
   const { user } = useContext(UserContext)
   const [editing, setEditing] = useState(false)
   const [editContent, setEditContent] = useState(post.content ?? '')
 
-  const postRef = isReply
-    ? firestore
-        .collection('posts')
-        .doc(originalPostId)
-        .collection('replies')
-        .doc(post.id)
-    : firestore.collection('posts').doc(post.id)
-
-  const ref = firestore
+  const replyRef = firestore
     .collection('posts')
     .doc(post.id)
     .collection('replies')
     .orderBy('createdAt', 'desc')
-  const [value, loading, error] = useCollection(ref)
+  const [replyDoc, loading, error] = useCollection(replyRef)
   const [replies, setReplies] = useState([])
+  useEffect(() => {
+    getReplies()
+  }, [replyDoc])
   if (!user?.userLoading && !user?.uid) {
     return <div>gotta login to post</div>
   }
@@ -51,16 +52,26 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
     await deleteReply(originalPostId, post.id)
   }
 
-  useEffect(() => {
+  const handleUpdateComment = async () => {
+    await updateComment(originalPostId, post.id, editContent)
+    setEditing(false)
+  }
+
+  const handleDeleteComment = async () => {
+    await deleteComment(originalPostId, post.id)
+  }
+
+  const getReplies = () => {
     if (loading) {
       return
     }
 
     if (error) {
       toast.error('Error loading replies')
+      return
     }
-    if (value) {
-      const unorderedReplies = value.docs.map((doc) => ({
+    if (replyDoc) {
+      const unorderedReplies = replyDoc.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
@@ -82,7 +93,7 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
       })
       setReplies(orderedReplies)
     }
-  }, [value])
+  }
 
   if (isReply) {
     return (
@@ -265,7 +276,6 @@ export default function Post({ post, originalPostId = null, isReply = false }) {
           </div>
         )}
 
-        <HeartButton postRef={postRef} userId={user?.uid} />
         {!isReply && <CreateReply postId={post?.id} />}
       </div>
     </div>
